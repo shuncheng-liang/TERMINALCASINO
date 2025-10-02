@@ -14,6 +14,16 @@ CASINO_HEADER = """
 │   ♦ T E R M I N A L  C A S I N O ♦   │
 └──────────────────────────────────────┘
 """
+upper_bar = """┌──────────────────────────────────────┐"""
+
+empty_bar = """│                                      │"""
+
+BLACKJACK_HEADER = """│     ♦ [1] B L A C K J A C K [1] ♦    │"""
+
+SLOTS_HEADER = """│        ♦ [2] S L O T S [2] ♦         │"""
+
+lower_bar = """└──────────────────────────────────────┘"""
+
 
 CASINO_HEADER_OPTIONS = {
     "header": CASINO_HEADER,
@@ -26,11 +36,13 @@ INVALID_CHOICE_PROMPT = "\nInvalid input. Please try again.\n"
 GAME_CHOICE_PROMPT = "Please choose a game to play: "
 
 # To add a new game, just add a handler function to GAME_HANDLERS
+
 GAME_HANDLERS: dict[str, Callable[[GameContext], None]] = {
     "blackjack": games.blackjack.play_blackjack,
     "slots": games.slots.play_slots,
     "poker": games.poker.play_poker,
     "roulette": games.roulette.play_roulette
+
 }
 ALL_GAMES = list(GAME_HANDLERS.keys())
 
@@ -98,8 +110,10 @@ def main_menu(ctx: GameContext) -> None:
             display_topbar(account, **CASINO_HEADER_OPTIONS)
             cprint("")  # spacing
             width = term_width()
+
             for i, name in enumerate(ALL_GAMES, start=1):
                 cprint(f"[{i}] {name.title()}".center(width) + "\n")
+
 
         choice = prompt_with_refresh(
             render_fn = render_choose_game,
